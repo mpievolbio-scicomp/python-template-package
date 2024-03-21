@@ -33,11 +33,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry tox tox-gh-actions pytest
+          pip install flake8 black isort pytest
 
-      - name: test with tox
-        run:
-          tox
+      - name: format
+        run: |
+          flake8 template
+          black template tests
+          isort template
 
-      - name: list files
-        run: ls -l .
+      - name: tests
+        run: |
+          pytest
