@@ -61,7 +61,7 @@ jobs:
 
       - name: Build wheels and source tarball
         run: |
-          python -m build --wheels
+          python -m build --wheel
           python -m build --sdist
 
       - name: create github release
