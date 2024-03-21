@@ -53,8 +53,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{steps.doc.outputs.artifact }}
-          documentation_path: ./doc
-          requirements_path: ./requirements/develop.txt
 
       - name: Build wheels and source tarball
         run: |
