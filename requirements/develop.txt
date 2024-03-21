@@ -1,0 +1,17 @@
+black
+build
+bump2version
+click
+codecov
+flake8
+isort
+sphinx
+sphinx-autodoc-typehints
+sphinx-rtd-theme
+mypy
+poetry
+pytest
+setuptools
+tox
+twine
+myst-parser

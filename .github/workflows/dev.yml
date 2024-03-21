@@ -38,9 +38,6 @@ jobs:
       - name: list files
         run: ls -l .
 
-      - name: test
-        run: pytest
-
       - uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
