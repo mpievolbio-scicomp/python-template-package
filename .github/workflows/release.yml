@@ -34,14 +34,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Get Changelog Entry
-        id: changelog_reader
-        uses: mindsers/changelog-reader-action@v2
-        with:
-          validation_depth: 10
-          version: ${{ steps.tag_name.outputs.current_version }}
-          path: ./CHANGELOG.md
-
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-versions }}
@@ -49,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
+          pip install -e .
 
       - name: build documentation
         run: |
@@ -63,12 +55,9 @@ jobs:
           publish_dir: ./site
 
       - name: Build wheels and source tarball
-        run: >-
-          poetry build
-
-      - name: show temporary files
-        run: >-
-          ls -l
+        run: |
+          python -m build --wheels
+          python -m build --sdist
 
       - name: create github release
         id: create_release
@@ -77,6 +66,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body: ${{ steps.changelog_reader.outputs.changes }}
-          files: dist/*.whl
+          files: dist/*
           draft: false
           prerelease: false
