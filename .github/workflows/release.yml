@@ -37,22 +37,26 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-versions }}
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements/develop.txt
           pip install -e .
-
       - id: doc
-        uses: sphinx-notes/pages@v3
-        with:
-          publish: false
+        run: |
+          cd docs
+          make html
+      # - name upload_artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: doc_build
+      #     path: |
+      #       docs/build/html
       - name: publish documentation
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{steps.doc.outputs.artifact }}
+          publish_dir: ./docs/build/html
 
       - name: Build wheels and source tarball
         run: |
