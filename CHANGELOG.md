@@ -1,4 +1,9 @@
 # Changelog
+
+## 0.1.3
+
+* Made another patch with changelog.
+
 ## 0.1.2
 
 * Next attempt to run the automated build and release workflow
