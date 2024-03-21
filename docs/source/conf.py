@@ -9,7 +9,7 @@
 project = 'Python Template Package'
 copyright = '2024, Max Planck Institute for Evolutionary Biology'
 author = 'Max Planck'
-version = "0.1.9"
+version = "0.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
