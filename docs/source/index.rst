@@ -10,7 +10,7 @@ Welcome to Python Template Package's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   template
 
 Indices and tables
 ==================

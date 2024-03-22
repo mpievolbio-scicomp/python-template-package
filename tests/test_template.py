@@ -9,10 +9,10 @@ import pytest
 from click.testing import CliRunner
 
 from template import cli
+from template.template import greeting
 
 
-
-class TemplateTest(unittest.TestCase):
+class TestCase(unittest.TestCase):
     """ A test class holding example tests using unittest. """
 
     def setUp(self) -> None:
@@ -34,7 +34,6 @@ class TemplateTest(unittest.TestCase):
                 os.remove(item)
             elif os.path.isdir(item):
                 shutil.rmtree(item)
-
 
     def test_reusing_constant(self):
         """ A test that reuses the test class constant"""
@@ -78,12 +77,23 @@ class TemplateTest(unittest.TestCase):
         result = runner.invoke(cli.main)
 
         self.assertEqual(result.exit_code, 0)
-        self.assertIn('python-template-package' , result.output)
+        self.assertIn('python-template-package', result.output)
 
         help_result = runner.invoke(cli.main, ['--help'])
         self.assertEqual(help_result.exit_code, 0)
-        self.assertIn('--help  Show this message and exit.',  help_result.output)
+        self.assertIn('--help  Show this message and exit.', help_result.output)
 
+    def test_greeting(self):
+        """ Test the greeting function."""
+
+        mood = "sad"
+
+        greet = greeting(mood)
+        expected = "How are you? I'm sad."
+
+        self.assertEqual(greet, expected)
+
+        ### TODO: Add other moods.
 
 if __name__ == "__main__":
     unittest.main()
