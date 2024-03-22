@@ -7,24 +7,24 @@ from click.testing import CliRunner
 from template import cli
 
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+def test_equal(response):
+    """Test equality."""
 
+    received = 1
+    expected = 1
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
-    del response
+    assert received == expected
 
 
-def test_command_line_interface():
+def test_lists_equal():
+    """ Test that two lists are equal."""
+
+    received = ["ACTG"]
+    expected = ["ACTG"]
+    assert received == expected
+    
+def test_cli():
     """Test the CLI."""
     runner = CliRunner()
     result = runner.invoke(cli.main)
