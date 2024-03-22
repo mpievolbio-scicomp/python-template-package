@@ -10,4 +10,3 @@ poetry
 pytest
 setuptools
 twine
-unittest
