@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 """Tests for `template` package."""
 
+import unittest
+import os
+import sys
+import shutil
 import pytest
 from click.testing import CliRunner
 
@@ -8,28 +12,78 @@ from template import cli
 
 
 
-def test_equal(response):
-    """Test equality."""
+class TemplateTest(unittest.TestCase):
+    """ A test class holding example tests using unittest. """
 
-    received = 1
-    expected = 1
+    def setUp(self) -> None:
+        """ Set up the test case. """
 
-    assert received == expected
+        # List where files and directories to be deleted are marked.
+        self._thrashcan = []
+
+        # A constant to be reused in any test function.
+        self._constant = "ABCD"
+
+    def tearDown(self) -> None:
+        """ Clean up after a test has finished."""
+
+        del self._constant
+
+        for item in self._thrashcan:
+            if os.path.isfile(item):
+                os.remove(item)
+            elif os.path.isdir(item):
+                shutil.rmtree(item)
 
 
-def test_lists_equal():
-    """ Test that two lists are equal."""
+    def test_reusing_constant(self):
+        """ A test that reuses the test class constant"""
 
-    received = ["ACTG"]
-    expected = ["ACTG"]
-    assert received == expected
-    
-def test_cli():
-    """Test the CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert 'python-template-package' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+        self.assertEqual(self._constant, "ABCD")
+
+    def test_equal(self):
+        """Test equality."""
+
+        received = 1
+        expected = 1
+
+        self.assertEqual(received, expected)
+
+    def test_lists_equal(self):
+        """ Test that two lists are equal."""
+
+        received = ["ACTG"]
+        expected = ["ACTG"]
+
+        self.assertListEqual(received, expected)
+
+    def test_fails(self):
+        """ Example for a failing test."""
+
+        received = False
+
+        self.assertTrue(received)
+
+    @unittest.skip("Give me a good reason for skipping!")
+    def test_skipped_fails(self):
+        """ Example for a skipped failing test."""
+
+        received = False
+
+        self.assertTrue(received)
+
+    def test_cli(self):
+        """Test the CLI."""
+        runner = CliRunner()
+        result = runner.invoke(cli.main)
+
+        self.assertEqual(result.exit_code, 0)
+        self.assertIn('python-template-package' , result.output)
+
+        help_result = runner.invoke(cli.main, ['--help'])
+        self.assertEqual(help_result.exit_code, 0)
+        self.assertIn('--help  Show this message and exit.',  help_result.output)
+
+
+if __name__ == "__main__":
+    unittest.main()
