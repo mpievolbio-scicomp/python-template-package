@@ -1,0 +1,5 @@
+./docs/source/template.rst
+./utils/list_template_files.sh
+./template
+./template/template.py
+./tests/test_template.py
